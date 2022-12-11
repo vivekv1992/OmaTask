@@ -2,7 +2,9 @@ package com.omaemirates
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import com.omaemirates.databinding.ActivityMainBinding
+import com.omaemirates.model.MainDataModel
 import java.io.IOException
 import java.io.InputStream
 
@@ -29,8 +31,10 @@ class MainActivity : AppCompatActivity() {
             val buffer = ByteArray(size)
             myInputStream.read(buffer)
             myOutput = String(buffer)
+            val mainDataModel = Gson().fromJson(myOutput, MainDataModel::class.java)
             // Sets the TextView with the string
-            binding.textView.text = myOutput
+            binding.textView.text =
+                mainDataModel.Result?.data?.receiptParam?.customer?.slogan2 ?: "No Message"
 
         } catch (e: IOException) {
             // Exception
