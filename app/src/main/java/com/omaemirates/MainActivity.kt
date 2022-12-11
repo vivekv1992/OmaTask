@@ -1,16 +1,19 @@
 package com.omaemirates
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.omaemirates.databinding.ActivityMainBinding
 import java.io.IOException
 import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val myTextView = findViewById<TextView>(R.id.textView)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // A string variable to store the text from the text file
         val myOutput: String
@@ -26,9 +29,8 @@ class MainActivity : AppCompatActivity() {
             val buffer = ByteArray(size)
             myInputStream.read(buffer)
             myOutput = String(buffer)
-
             // Sets the TextView with the string
-            myTextView.text = myOutput
+            binding.textView.text = myOutput
 
         } catch (e: IOException) {
             // Exception
