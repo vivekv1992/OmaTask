@@ -1,6 +1,6 @@
 package com.omaemirates.di
 
-import com.omaemirates.model.MainDataModel
+import com.omaemirates.model.DataModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideVisaData(): MainDataModel {
-        return MainDataModel()
+    fun provideVisaData(): DataModel {
+        return DataModel()
     }
 }

@@ -3,20 +3,20 @@ package com.omaemirates
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
+import androidx.lifecycle.lifecycleScope
 import com.omaemirates.databinding.ActivityMainBinding
-import com.omaemirates.model.MainDataModel
+import com.omaemirates.model.DataModel
+import com.omaemirates.state.UiState
 import com.omaemirates.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.IOException
-import java.io.InputStream
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var mainDataModel: MainDataModel
+    lateinit var dataModel: DataModel
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
 
@@ -24,33 +24,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        lifecycleScope.launch {
+            mainViewModel.uiState.collect { uiState ->
+                when (uiState) {
+                    is UiState.Success -> showData(uiState.data)
+                    is UiState.Error -> showError(uiState.exception)
+                    else -> {
 
-        // A string variable to store the text from the text file
-        val myOutput: String
-
-        // Declaring an input stream to read data
-        val myInputStream: InputStream
-
-        // Try to open the text file, reads
-        // the data and stores it in the string
-        try {
-            myInputStream = this.resources.openRawResource(R.raw.task)
-            val size: Int = myInputStream.available()
-            val buffer = ByteArray(size)
-            myInputStream.read(buffer)
-            myOutput = String(buffer)
-            val mainDataModel = Gson().fromJson(myOutput, MainDataModel::class.java)
-            mainViewModel.getApiData()
-            this.mainDataModel = mainDataModel
-
-            // Sets the TextView with the string
-            binding.textView.text =
-                mainDataModel.Result?.data?.receiptParam?.customer?.slogan2 ?: "No Message"
-
-        } catch (e: IOException) {
-            // Exception
-            e.printStackTrace()
+                    }
+                }
+            }
         }
+        mainViewModel.getApiData()
+    }
+
+    private fun showData(dataModel: DataModel) {
+        binding.textView.text =
+            dataModel.Result?.data?.receiptParam?.customer?.slogan2 ?: "No Message"
+    }
+
+    private fun showError(throwable: Throwable) {
 
     }
 
