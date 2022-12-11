@@ -1,4 +1,4 @@
-package com.memeglobal.omaemirates
+package com.omaemirates
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
