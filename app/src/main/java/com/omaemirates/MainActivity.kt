@@ -1,16 +1,24 @@
 package com.omaemirates
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.omaemirates.databinding.ActivityMainBinding
 import com.omaemirates.model.MainDataModel
+import com.omaemirates.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.io.InputStream
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    @Inject
+    lateinit var mainDataModel: MainDataModel
     private lateinit var binding: ActivityMainBinding
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             myInputStream.read(buffer)
             myOutput = String(buffer)
             val mainDataModel = Gson().fromJson(myOutput, MainDataModel::class.java)
+            mainViewModel.getApiData()
+            this.mainDataModel = mainDataModel
+
             // Sets the TextView with the string
             binding.textView.text =
                 mainDataModel.Result?.data?.receiptParam?.customer?.slogan2 ?: "No Message"
