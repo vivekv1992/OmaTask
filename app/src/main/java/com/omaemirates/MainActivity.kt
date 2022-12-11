@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
             // Sets the TextView with the string
             binding.textView.text =
                 mainDataModel.Result?.data?.receiptParam?.customer?.slogan2 ?: "No Message"
+            binding.textView2.text = mainDataModel.Result?.data?.receiptParam?.customer?.slogan1 ?: "No Message"
+            binding.textView3.text = mainDataModel.Result?.data?.receiptParam?.customer?.cardHolderName.toString()
 
         } catch (e: IOException) {
             // Exception
