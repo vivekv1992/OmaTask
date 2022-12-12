@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.omaemirates.databinding.ActivityMainBinding
 import com.omaemirates.model.DataModel
 import com.omaemirates.state.UiState
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycleScope.launch {
             mainViewModel.uiState.collect { uiState ->
                 when (uiState) {
@@ -43,6 +45,10 @@ class MainActivity : AppCompatActivity() {
             dataModel.Result?.data?.receiptParam?.customer?.slogan2 ?: "No Message"
         binding.textView2.text = dataModel.Result?.data?.receiptParam?.customer?.slogan1 ?: "No Message"
         binding.textView3.text = dataModel.Result?.data?.receiptParam?.customer?.cardHolderName.toString()
+        dataModel.Result?.data?.caKeyParamMain?.caKeyParam?.let {
+            binding.recyclerView.adapter = Adapter(it)
+        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun showError(throwable: Throwable) {
