@@ -15,7 +15,9 @@ class Adapter(private val dataList: List<CaKeyParam>) : RecyclerView.Adapter<Ada
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val caParam = dataList[position]
-        holder.binding.merchCountry.text = caParam.exponent
+        holder.binding.exponent.text = caParam.exponent
+        holder.binding.rid.text = caParam.rid
+        holder.binding.expDate.text = caParam.expdate
     }
 
     override fun getItemCount(): Int {

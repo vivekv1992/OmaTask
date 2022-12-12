@@ -15,7 +15,7 @@
 
 
     <TextView
-        android:id="@+id/countryCode"
+        android:id="@+id/exponent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
@@ -24,7 +24,7 @@
 
 
     <TextView
-        android:id="@+id/merchName"
+        android:id="@+id/rid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
@@ -33,7 +33,7 @@
 
 
     <TextView
-        android:id="@+id/merchCountry"
+        android:id="@+id/expDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"

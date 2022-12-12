@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             binding.recyclerView.adapter = Adapter(it)
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
     private fun showError(throwable: Throwable) {
