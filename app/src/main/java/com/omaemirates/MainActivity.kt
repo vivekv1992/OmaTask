@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
                 when (uiState) {
                     is UiState.Success -> showData(uiState.data)
                     is UiState.Error -> showError(uiState.exception)
+                    is UiState.Loading -> {
+
+                    }
+                    is UiState.Finish -> {
+
+                    }
                     else -> {
 
                     }

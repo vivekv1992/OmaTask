@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<DataModel>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState<DataModel>>(UiState.Initial)
     val uiState: StateFlow<UiState<DataModel>> = _uiState
     fun getApiData() {
         viewModelScope.launch {
